@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download Video</title>
+    <style>
+        /* General Styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .marquee-container {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+            z-index: 1000;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 40px; /* Adjusted to be below the marquee */
+            width: 100%;
+            background-color: #333;
+            color: white;
+            display: flex;
+            justify-content: flex-end; /* Aligns the links to the right */
+            padding: 10px 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            z-index: 999; /* Ensure it's below the marquee */
+        }
+
+        .navbar a {
+            color: white;
+            padding: 14px 20px;
+            text-decoration: none;
+            text-transform: uppercase;
+            margin-left: 20px; /* Adds space between the links */
+        }
+
+        .navbar a:hover {
+            background-color: #575757;
+        }
+
+        /* Social Media Icons */
+        .social-icons {
+            position: fixed;
+            right: 10px;
+            top: 85px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .social-icons a {
+            margin: 10px 0;
+            color: #333;
+            font-size: 24px;
+            text-decoration: none;
+        }
+
+        .social-icons a:hover {
+            color: #007BFF;
+        }
+
+        /* Form Styling */
+        #downloadForm {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+        }
+
+        #downloadForm label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        #downloadForm input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        #downloadForm button {
+            padding: 10px 20px;
+            background-color: #28a745;
+            border: none;
+            border-radius: 4px;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        #downloadForm button:hover {
+            background-color: #218838;
+        }
+
+        .description {
+            position: fixed;
+            bottom: 10px;
+            width: 100%;
+            text-align: center;
+            font-size: 14px;
+            color: #333;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="marquee-container">
+        <marquee behavior="scroll" direction="left">ONE WAY PALTFORM</marquee>
+    </div>
+
+    <!-- Navigation Bar -->
+    <div class="navbar">
+        <div>
+            <a href="#">Home</a>
+            <a href="about.html">About Us</a>
+            <a href="contact.html">Contact Us</a>
+            <a href="feedback.html">Feedback</a>
+        </div>
+    </div>
+
+    <!-- Social Media Icons -->
+    <div class="social-icons">
+        <a href="https://www.instagram.com/codinghub713/" target="_blank"><img src="https://th.bing.com/th?id=OIP.2spOcwGpwKFSn-ZDDhdeIgHaHd&w=249&h=250&c=8&rs=1&qlt=90&o=6&dpr=1.5&pid=3.1&rm=2" alt="Instagram" style="width: 30px; height: 30px;"></a>
+        <a href="https://www.twitter.com" target="_blank"><img src="https://th.bing.com/th/id/OIP.EMSkKbPUe-m9NWb96yIjJAHaHa?w=157&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7"alt="Twitter" style="width: 30px; height:30px;"></a>
+        <a href="https://www.facebook.com" target="_blank"><img src="https://th.bing.com/th/id/R.e790c25db5e52838040686612b1a732c?rik=lUG8VhVhBMsXGA&riu=http%3a%2f%2fwww.freeiconspng.com%2fuploads%2ffacebook-logo-3.png&ehk=us5VLM8IhpbZeBQ%2bLxLKeVAjBv6qlFZ5iltEyDe91KM%3d&risl=&pid=ImgRaw&r=0"alt="Facebook" style="width: 30px; height:30px;"></a>
+        <a href="https://www.snapchat.com" target="_blank"><img src="https://th.bing.com/th/id/OIP.WhXmujDfdngOVO0so89D4gAAAA?rs=1&pid=ImgDetMain"alt="Snapchat" style="width: 30px; height:30px;"></a>
+    </div>
+
+    <!-- Download Form -->
+    <form id="downloadForm">
+        <label for="link">Youtube Video URL:</label>
+        <input type="text" id="link" name="link" required>
+        <br>
+        <button type="submit">Download</button>
+    </form>
+
+</body>
+
+</html>
+<div class="description">
+    <p>Download videos from YouTube easily. Paste the URL above and click download.</p>
+</div>
+
+
+    <p id="result"></p> <!-- Element for displaying response -->
+
+    <script>
+        document.getElementById('downloadForm').addEventListener('submit', async function(event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            const link = document.getElementById('link').value;
+
+        const formData = new FormData(event.target);
+        const response = await fetch('http://127.0.0.1:8000/download', {
+            method: 'POST',
+            body: formData
+        });
+
+                if (!response.ok) {
+              const result = await response.json();
+              console.log('Response:',result);
+                } else {
+                    console.error('Error:', response.statusText);
+                }
+            });
+    </script>
+</body>
+</html>
